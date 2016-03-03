@@ -1,0 +1,95 @@
+% You should title the file with a .tex extension (hw1.tex, for example)
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\oddsidemargin0cm
+\topmargin-2cm     %I recommend adding these three lines to increase the 
+\textwidth16.5cm   %amount of usable space on the page (and save trees)
+\textheight23.5cm  
+
+\newcommand{\question}[2] {\vspace{.25in} \hrule\vspace{0.5em}
+\noindent{\bf #1: #2} \vspace{0.5em}
+\hrule \vspace{.10in}}
+\renewcommand{\part}[1] {\vspace{.10in} {\bf (#1)}}
+
+\newcommand{\myname}{Charles Liu}
+\newcommand{\myandrew}{cliu02@g.harvard.edu}
+\newcommand{\myhwnum}{3}
+
+\pagestyle{fancyplain}
+\lhead{\fancyplain{}{\textbf{HW\myhwnum}}}      % Note the different brackets!
+\rhead{\fancyplain{}{\myname\\ \myandrew}}
+\chead{\fancyplain{}{CS284}}
+
+\begin{document}
+
+\medskip                        % Skip a "medium" amount of space
+                                % (latex determines what medium is)
+                                % Also try: \bigskip, \littleskip
+
+\thispagestyle{plain}
+\begin{center}                  % Center the following lines
+{\Large CS284 Problem Set \myhwnum} \\
+\myname \\
+\myandrew \\
+\today\\
+\end{center}
+
+\question{1}{Direct Shooting and Transcription}
+
+\part{a} $N$ decision variables, $u_0,...,u_{N-1}$\\
+
+\part{b} $c_g(x_N), c_o(x_k) \forall k \in [1,N]$ so $N+1$ altogether, and $x(0)=x_0$ if that's considered a constraint\\
+
+\part{c} The same as (a) and additional $x_1, ..., x_{N}$ so $2N$ altogether\\
+
+\part{d} The same as (b) and $N$ constraints of the forward Euler integration for each step, so $2N+1$ altogether\\
+
+\part{e} Changing any $u_i$ will directly affect $x_{i+1}$ in the shooting method, so $\frac{\delta c_g(x_N)}{\delta u_i} = \frac{\delta c_g(x_N)}{\delta x_{N}}\frac{\delta x_{N}}{\delta x_{N-1}}...\frac{\delta x_{i+1}}{\delta u_i} \neq 0$, so $N$ non-zero entries\\
+
+\part{f} Unlike in the shooting method the $x_{i}'s$ are fixed decision variables, so only $x_N$ is non-zero\\
+
+\part{g} As noted in part e, any change in a decision variable will cause a change in subsequent $x_i's$ so it will be (i)\\
+
+\part{h} Similar to (f) only the $x_i$ variable can affect the constraint corresponding to that $i$ so it will be (iv)
+
+\question{2}{Direct Collocation}
+
+\part{a} 
+
+Given the hint of the cubic term being $(\frac{2}{h^3}(x_0-x_1)+\frac{1}{h^2}(\dot{x}_0 + \dot{x}_1))t^3$ and $x(0) = x_0$, we get that the cubic polynomial is of the form:
+\begin{eqnarray*}
+	x(t) &=& (\frac{2}{h^3}(x_0-x_1)+\frac{1}{h^2}(\dot{x}_0 + \dot{x}_1))t^3 + \alpha_2t^2 + \alpha_1t + x_0
+\end{eqnarray*}
+Next plugging in $x(h) = x_1$, we get:
+\begin{eqnarray*}
+	\alpha_1 &=& \frac{3(x_1-x_0) - h(\dot{x}_1 + \dot{x}_0) - \alpha_2h^2}{h}\\
+	x(t) &=& (\frac{2}{h^3}(x_0-x_1)+\frac{1}{h^2}(\dot{x}_0 + \dot{x}_1))t^3 + \alpha_2t^2 + [\frac{3(x_1-x_0) - h(\dot{x}_1 + \dot{x}_0) - \alpha_2h^2}{h}]t + x_0
+\end{eqnarray*}
+Next plugging in $\dot{x}(0) = \dot{x}_0$, we get:
+\begin{eqnarray*}
+	\dot{x}_0 &=& \frac{3(x_1-x_0) - h(\dot{x}_1 + \dot{x}_0) - \alpha_2h^2}{h}\\
+	\alpha_2 &=& \frac{3(x_1-x_0) -2h\dot{x}_0 -h\dot{x}_1}{h^2}\\
+	x(t) &=& (\frac{2}{h^3}(x_0-x_1)+\frac{1}{h^2}(\dot{x}_0 + \dot{x}_1))t^3 + (\frac{3(x_1-x_0) -2h\dot{x}_0 -h\dot{x}_1}{h^2})t^2 +\\
+	     && \dot{x}_0t + x_0
+\end{eqnarray*}
+
+d\part{b}
+	\begin{eqnarray*}
+		x(.5h) &=& \frac{x_0-x_1}{4} + \frac{h(\dot{x}_0+\dot{x}_1)}{8} + \frac{3(x_1-x_0)}{4} - \frac{h\dot{x}_0}{2} - \frac{h\dot{x}_1}{4} + \frac{h\dot{x}_0}{2} + x_0\\
+			   &=& \frac{x_1+x_0}{2} + \frac{h(\dot{x}_0 - \dot{x}_1)}{8}\\
+		x'(t) &=& 3(\frac{2}{h^3}(x_0-x_1)+\frac{1}{h^2}(\dot{x}_0 + \dot{x}_1))t^2 + 2(\frac{3(x_1-x_0) -2h\dot{x}_0 -h\dot{x}_1}{h^2})t + \dot{x}_0\\
+		x'(.5h) &=& \frac{3}{2}h(x_1-x_0) - \frac{1}{4}(\dot{x}_0 + \dot{x}_1)
+	\end{eqnarray*}
+
+\question{3}{Collocation Constraint Implementation}
+Code for g/dg are in colconstraint.m, the P3 file runs checks the approximation errors.
+
+
+\end{document}
+
