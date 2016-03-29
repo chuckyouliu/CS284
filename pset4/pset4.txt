@@ -1,0 +1,30 @@
+1) a) see inConvHull.m
+   b) attached sample_rrt.png. N's were: 
+   561
+   378
+   856
+   308
+   784
+   695
+   864
+   488
+   530
+   515
+   median: 545.5000
+
+   Note, modified bugtrap.m to run 10x if you plan on running it.
+
+2) See bugtraptwotree.m. Attached sample_rrt_bidirectional.png. N's were:
+   973
+   310
+   317
+   346
+   265
+   285
+   594
+   660
+   253
+   594
+   median: 331.5
+
+   Note script has a loop to run 10x if you plan on running it.
