@@ -24,7 +24,7 @@ minDistGoal = 0.25; % This is the convergence criterion. We will declare
 
 %% FILL ME IN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Choose one of these methods
-% method = 'euclidean'; % Euclidean distance metric (part b of problem)
+method = 'euclidean'; % Euclidean distance metric (part b of problem)
 % method = 'lqr'; % LQR distance metric (part d of problem)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
