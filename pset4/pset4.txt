@@ -28,3 +28,12 @@
    median: 331.5
 
    Note script has a loop to run 10x if you plan on running it.
+
+3) a) [-2;3] = [-2+2*pi;3], norm([-2+2*pi;3] - [4;1]) = 2.0199
+   b) see extendEuclidean.m and closestVertexEuclidean.m
+      It's not an efficient solution in my case as I'm simulating every
+      u and choosing the closest one to the target point in each iteration.
+      It's also not reliable, there are pretty good runs (see euclidean_good.png)
+      where in around 700-800 iterations it can find the path, and then there
+      are runs (see euclidean_bad.png) that take much longer. The one in that
+      image took 4620 iterations.
