@@ -3,25 +3,17 @@ function new_vert = extendLQR( closest_vert,xy,K )
 g = 9.81;
 b = 0.1;
 
-% get current difference
+% get current difference, again noting that theta can wrap around
 diff = closest_vert - xy;
-while diff(1) > 3*pi/2
-    diff(1) = diff(1) - 2*pi;
-end
-while diff(1) < -pi/2
-    diff(1) = diff(1) + 2*pi;
-end
+diff(1) = diff(1) - 2*pi*ceil((diff(1) - pi)/(2*pi));
+u_opt = -K*diff;
 
 % apply optimal u
-u_opt = min(max(-K*diff, -5), 5);
+u_opt = min(max(u_opt, -5), 5);
 [t,y] = ode45(@(t,y) [y(2); u_opt - g*sin(y(1))-b*y(2)],[0 .1],closest_vert);
 
 new_vert = y(size(y,1), :)';
-while new_vert(1) > 3*pi/2
-    new_vert(1) = new_vert(1) - 2*pi;
-end
-while new_vert(1) < -pi/2
-    new_vert(1) = new_vert(1) + 2*pi;
-end
+% normalize to between -pi/2 to 3pi/2
+new_vert(1) = new_vert(1) - 2*pi*ceil((new_vert(1) - 3*pi/2)/(2*pi));
 end
 

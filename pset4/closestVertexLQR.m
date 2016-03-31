@@ -18,15 +18,9 @@ R = 0.1;
 [K,S] = lqr(A,B,Q,R);
 
 for k=1:size(rrt_verts, 2)
-    % calculate difference from xy taking into account wrapping of theta
-    % then update cost
+    % calculate cost, noting wraparound possibility of theta
     diff = rrt_verts(:, k) - xy;
-    while diff(1) < -pi/2
-        diff(1) = diff(1) + 2*pi;
-    end
-    while diff(1) > 3*pi/2
-        diff(1) = diff(1) - 2*pi;
-    end
+    diff(1) = diff(1) - 2*pi*ceil((diff(1) - pi)/(2*pi));
     cost = diff'*S*diff;
     if cost < min_cost
         min_cost = cost;

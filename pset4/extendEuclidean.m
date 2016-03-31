@@ -14,12 +14,7 @@ for k = 1:size(u,2)
     [t,y] = ode45(@(t,y) [y(2); u(k) - g*sin(y(1))-b*y(2)],[0 .1],closest_vert);
     sim_vert = y(size(y,1), :)';
     % normalize theta to within [-pi/2, 3*pi/2]
-    while sim_vert(1) > 3*pi/2
-        sim_vert(1) = sim_vert(1) - 2*pi;
-    end
-    while sim_vert(1) < -pi/2
-        sim_vert(1) = sim_vert(1) + 2*pi;
-    end
+    sim_vert(1) = sim_vert(1) - 2*pi*ceil((sim_vert(1) - 3*pi/2)/(2*pi));
     sim_res(:, k) = sim_vert;
 end
 
