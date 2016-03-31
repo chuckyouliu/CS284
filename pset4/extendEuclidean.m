@@ -10,9 +10,9 @@ u = -5:.5:5;
 sim_res = zeros(2, length(u));
 
 % for each u input, simulate from closest_vert for .1 seconds
-for k = 1:length(u)
+for k = 1:size(u,2)
     [t,y] = ode45(@(t,y) [y(2); u(k) - g*sin(y(1))-b*y(2)],[0 .1],closest_vert);
-    sim_vert = y(length(y), :)';
+    sim_vert = y(size(y,1), :)';
     % normalize theta to within [-pi/2, 3*pi/2]
     while sim_vert(1) > 3*pi/2
         sim_vert(1) = sim_vert(1) - 2*pi;

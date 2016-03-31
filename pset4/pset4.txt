@@ -37,3 +37,10 @@
       where in around 700-800 iterations it can find the path, and then there
       are runs (see euclidean_bad.png) that take much longer. The one in that
       image took 4620 iterations.
+
+   c) A = [0 1; -gcos(theta) -b], B=[0;1]
+      evaluating at x0 = [pi - 0.1; 2.0], u0 = 0 returned
+      S = [7.3567 2.0021; 2.0021 0.6975]
+      cost = (x-x0)'S(x-x0) = 3.0002
+
+   d) 
