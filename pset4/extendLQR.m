@@ -6,10 +6,9 @@ b = 0.1;
 % get current difference, again noting that theta can wrap around
 diff = closest_vert - xy;
 diff(1) = diff(1) - 2*pi*ceil((diff(1) - pi)/(2*pi));
-u_opt = -K*diff;
 
 % apply optimal u
-u_opt = min(max(u_opt, -5), 5);
+u_opt = min(max(-K*diff, -5), 5);
 [t,y] = ode45(@(t,y) [y(2); u_opt - g*sin(y(1))-b*y(2)],[0 .1],closest_vert);
 
 new_vert = y(size(y,1), :)';
