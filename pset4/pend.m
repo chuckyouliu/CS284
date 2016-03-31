@@ -11,8 +11,10 @@ xy_goal = [pi;0]; plot(xy_goal(1),xy_goal(2),'go','MarkerFaceColor','g','MarkerS
 
 % Initialize RRT. The RRT will be represented as a 2 x N list of points. So
 % each column represents a vertex of the tree.
-rrt_verts = zeros(2,1000);
-rrt_verts(:,1) = xy_start;
+
+% add a row to store parent to keep track of path from start to goal
+rrt_verts = zeros(3,1000);
+rrt_verts(:,1) = [1;xy_start];
 N = 1;
 nearGoal = false; % This will be set to true if goal has been reached
 minDistGoal = 0.25; % This is the convergence criterion. We will declare
@@ -49,9 +51,9 @@ while ~nearGoal
     
     %% FILL ME IN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if strcmp(method, 'euclidean')
-        closest_vert = closestVertexEuclidean(rrt_verts(:,1:N),xy); % Write this function
+        [index, closest_vert] = closestVertexEuclidean(rrt_verts(2:3,1:N),xy); % Write this function
     elseif strcmp(method, 'lqr')
-        [closest_vert,K] = closestVertexLQR(rrt_verts(:,1:N),xy); % Write this function
+        [index, closest_vert,K] = closestVertexLQR(rrt_verts(2:3,1:N),xy); % Write this function
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
@@ -89,7 +91,7 @@ while ~nearGoal
     if N > size(rrt_verts,2)
         rrt_verts = [rrt_verts zeros(size(rrt_verts))];
     end
-    rrt_verts(:,N) = new_vert;
+    rrt_verts(:,N) = [index; new_vert];
     
     % Check if we have reached goal
     if norm(xy_goal-new_vert) < minDistGoal
@@ -101,7 +103,20 @@ while ~nearGoal
        
 end
 
+% now construct xpath through looping through the parents in rrt_verts
+last_node = rrt_verts(:, N);
+parent = last_node(1);
+xpath = last_node(2:3);
+while parent ~= 1
+    last_node = rrt_verts(:, parent);
+    parent = last_node(1);
+    xpath = [last_node(2:3) xpath];
+end
+xpath = [xy_start xpath];
+
 % Plot vertices in RRT
 hold on;
 plot(rrt_verts(1,:),rrt_verts(2,:),'bo','MarkerFaceColor','b','MarkerSize',5);
+hold off;
+plot(xpath(1,:), xpath(2,:), 'bo-','MarkerFaceColor','b','MarkerSize',5);
 

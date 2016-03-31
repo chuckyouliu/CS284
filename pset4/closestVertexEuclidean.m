@@ -1,4 +1,4 @@
-function vertex = closestVertexEuclidean( rrt_verts, xy )
+function [I,vertex] = closestVertexEuclidean( rrt_verts, xy )
 % find closest vertex based off euclidean distance
 % because theta wraps around, need to check if wrapping around will make it
 % closer

@@ -43,4 +43,7 @@
       S = [7.3567 2.0021; 2.0021 0.6975]
       cost = (x-x0)'S(x-x0) = 3.0002
 
-   d) 
+   d) see extendLQR.m and closestVertexLQR.m, performance much better, average
+      around N= 200 iterations, see sample_lqr.png.
+
+      lqr_path.png for sample path

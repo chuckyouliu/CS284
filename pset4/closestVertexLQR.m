@@ -1,4 +1,4 @@
-function [min_vertex, K] = closestVertexLQR( rrt_verts, xy )
+function [index, min_vertex, K] = closestVertexLQR( rrt_verts, xy )
 % use lqr to find closest vertex
 
 % constants
@@ -8,6 +8,7 @@ b = 0.1;
 % set up return variables and cost tracking variable
 min_vertex = [0;0];
 min_cost = flintmax;
+index = -1;
 
 % set up lqr
 A = [0 1; -g*cos(xy(1)) -b];
@@ -30,6 +31,7 @@ for k=1:size(rrt_verts, 2)
     if cost < min_cost
         min_cost = cost;
         min_vertex = rrt_verts(:, k);
+        index = k;
     end
 end
 

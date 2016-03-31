@@ -24,6 +24,6 @@ for k = 1:size(u,2)
 end
 
 % now get the closest vertex to xy from the simulated u's
-new_vert = closestVertexEuclidean(sim_res, xy);
+[~, new_vert] = closestVertexEuclidean(sim_res, xy);
 end
 
