@@ -1,5 +1,8 @@
+For each algorithm I've attached snapshots of the form snap_problemnumber_i of every 100
+iterations of a sample run in the snapshots folder.
+
 1) a) see inConvHull.m
-   b) attached sample_rrt.png. N's were: 
+   b) N's were: 
    561
    378
    856
@@ -14,7 +17,7 @@
 
    Note, modified bugtrap.m to run 10x if you plan on running it.
 
-2) See bugtraptwotree.m. Attached sample_rrt_bidirectional.png. N's were:
+2) See bugtraptwotree.m. N's were:
    973
    310
    317
@@ -44,6 +47,6 @@
       cost = (x-x0)'S(x-x0) = 3.0002
 
    d) see extendLQR.m and closestVertexLQR.m, performance much better, average
-      around N= 250 iterations, see sample_lqr.png.
+      around N= 250 iterations.
 
       lqr_path.png for sample path

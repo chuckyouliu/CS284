@@ -116,7 +116,7 @@ xpath = [xy_start xpath];
 
 % Plot vertices in RRT
 hold on;
-plot(rrt_verts(1,:),rrt_verts(2,:),'bo','MarkerFaceColor','b','MarkerSize',5);
+plot(rrt_verts(2,:),rrt_verts(3,:),'bo','MarkerFaceColor','b','MarkerSize',5);
 hold off;
 plot(xpath(1,:), xpath(2,:), 'bo-','MarkerFaceColor','b','MarkerSize',5);
 
